@@ -4,6 +4,8 @@ import zipfile
 import csv
 from pathlib import Path
 import glob
+import ipaddress
+import pandas as pd
 
 zf = zipfile.ZipFile("TEST.zip",'r')
 zf.extractall("")
@@ -34,12 +36,24 @@ if 'Test/combined.csv' not in csv_files:
       
       m =set(tuple(x) for x in filelist)
       finalFile =[list(x) for x in m]
-      finalFile.sort()
+      
      
       for i in finalFile:
         if i[0] != 'ï»¿Source IP':
        
           writer.writerow(i)
+
+    d1= csv.reader(open("Test/Combined.csv"))
+    next(d1)
+    d2 = sorted(d1,key= lambda row : (ipaddress.IPv4Address(row[0]),row[1]))
+    print(d1)
+    d1= open("Test/Combined.csv",'w',newline='')
+    w = csv.writer(d1)
+    for i in d2:
+
+      w.writerow(i)
+    
+          
 
 
 
@@ -73,25 +87,8 @@ if 'Test/combined.csv' not in csv_files:
 
 
 
-# zf = zipfile.ZipFile("MYFILE.zip",'w',compression=zipfile.ZIP_DEFLATED)
-# zf.write('a.txt')
-# zf.write('b.txt')
-# zf.close()
-
-  # if you want to see all files inside zip folder
-  #  zf.namelist() 
-  # now read your csv file 
-#   df = pd.read_csv(zf.open('prod1.csv'))
 
 
 
 
-
-
-    # print('Extract all files in ZIP to current directory')
-    # # Create a ZipFile Object and load sample.zip in it
-    # with ZipFile('Engineering Test Files.zip', 'r') as zipObj:
-    #    # Extract all the contents of zip file in current directory
-    #    zipObj.extractall()
-    
   
