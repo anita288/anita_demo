@@ -48,7 +48,9 @@ if 'Test/combined.csv' not in csv_files:
     d2 = sorted(d1,key= lambda row : (ipaddress.IPv4Address(row[0]),row[1]))
     print(d1)
     d1= open("Test/Combined.csv",'w',newline='')
+   
     w = csv.writer(d1)
+    w.writerow(header)
     for i in d2:
 
       w.writerow(i)
